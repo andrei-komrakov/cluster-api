@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  api:
+    image: swisscom_connector
+    build:
+      context: connector
+    depends_on:
+      - node1
+      - node2
+      - node3
+    env_file:
+      - connector/.env.docker
+    command: [ 'uvicorn', 'app.api:app', '--host', '0.0.0.0' ]
+    ports:
+      - 8000:8000
+
+  node1:
+    image: swisscom_node
+    build:
+      context: node
+    command: [ 'uvicorn', 'app.api:app', '--host', '0.0.0.0' ]
+
+  node2:
+    image: swisscom_node
+    build:
+      context: node
+    command: [ 'uvicorn', 'app.api:app', '--host', '0.0.0.0' ]
+
+  node3:
+    image: swisscom_node
+    build:
+      context: node
+    command: [ 'uvicorn', 'app.api:app', '--host', '0.0.0.0' ]
